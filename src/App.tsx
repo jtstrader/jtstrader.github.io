@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+
+import AboutMe from "./components/AboutMe";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [tab, setTab] = useState<number>(0);
+
+  const tabClass = (tabIdx: number): string => {
+    return `tab ${
+      tab === tabIdx ? "active text-green-600 border-b-2 border-green-600" : ""
+    }`;
+  };
+
+  const pageComponent: JSX.Element[] = [<AboutMe />];
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="container">
+        <div className="m-6">
+          <h1>
+            <b>Jacob Strader</b>
+          </h1>
+
+          <div className="text-sm font-medium text-center text-gray-500">
+            <ul className="flex flex-wrap -mb-px justify-center">
+              <li className="mr-2">
+                <a href="#" className={tabClass(0)} onClick={() => setTab(0)}>
+                  About Me
+                </a>
+              </li>
+              <li className="mr-2">
+                <a href="#" className={tabClass(1)} onClick={() => setTab(1)}>
+                  Projects
+                </a>
+              </li>
+              <li className="mr-2">
+                <a href="#" className={tabClass(2)} onClick={() => setTab(2)}>
+                  Settings
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        {pageComponent[tab]}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
